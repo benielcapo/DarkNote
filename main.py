@@ -140,7 +140,7 @@ def load_widget(widget_type, data: NoteData | None = None):
             root.destroy()
             save_note(note_path, written_text)
         root = get_default_widget(window_width=800, window_height=600, resizable=True)
-        container = tkinter.Frame(root)
+        container = tkinter.Frame(root, bg="#020E20")
         container.pack(side="right", fill="both", expand=True)
         text = tkinter.Text(
             root,
@@ -219,7 +219,7 @@ def load_widget(widget_type, data: NoteData | None = None):
                 root.destroy()
                 save_note(note_path, written_text)
         root = get_default_widget(window_width=800, window_height=600, resizable=True)
-        container = tkinter.Frame(root)
+        container = tkinter.Frame(root, bg="#020E20")
         container.pack(side="right", fill="both", expand=True)
         text = tkinter.Text(
             root,
