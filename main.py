@@ -43,6 +43,7 @@ class CustomRoot(tkinter.Tk):
         super().__init__(*args, **kwargs)
         myappid = 'com.darknote.darknote'
         ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
+        self.title("DarkNote")
         self.iconbitmap(resource_path(os.path.join("Assets", "icon.ico")))
 
 class NoteData:
