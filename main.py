@@ -9,6 +9,8 @@ import cryptography.hazmat.primitives
 import cryptography.fernet
 import base64
 import tkinter.simpledialog
+import sys
+import ctypes
 
 USER = getpass.getuser()
 BASE_PATH = fr"C:\Users\{USER}\AppData\Local\DarkNote"
@@ -29,6 +31,20 @@ class WidgetTypes:
     enter_password = "enter_password"
     text_editor_create = "text_editor_create"
 
+def resource_path(relative_path):
+    try:
+        base_path = sys._MEIPASS
+    except AttributeError:
+        base_path = os.path.abspath(".")
+    return os.path.join(base_path, relative_path)
+
+class CustomRoot(tkinter.Tk):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        myappid = 'com.darknote.darknote'
+        ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
+        self.iconbitmap(resource_path(os.path.join("Assets", "icon.ico")))
+
 class NoteData:
     path = ""
 
@@ -44,7 +60,7 @@ def get_fernet_key(password: str) -> bytes:
     return key
 
 def get_default_widget(window_width = 300, window_height = 400, background_color = "black", resizable = False):
-    root = tkinter.Tk()
+    root = CustomRoot()
     root.configure(background=background_color)
     root.resizable(resizable, resizable)
     screen_width = root.winfo_screenwidth()
@@ -114,7 +130,7 @@ def verify_password(password):
 
 def choose_new_pass():
     delete_notes()
-    root = tkinter.Tk()
+    root = CustomRoot()
     root.configure(background="black")
     root.resizable(False, False)
     label = tkinter.Label(root, text="Create password", font=("Arial", 20), background="black", fg="white")
