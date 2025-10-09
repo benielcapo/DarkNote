@@ -135,7 +135,7 @@ def choose_new_pass():
     root.resizable(False, False)
     label = tkinter.Label(root, text="Create password", font=("Arial", 20), background="black", fg="white")
     label.pack(pady=50)
-    pass_input = tkinter.Entry(root, relief="flat", highlightthickness=0, bd=0, font=("Arial", 15))
+    pass_input = tkinter.Entry(root, relief="flat", highlightthickness=0, bd=0, font=("Arial", 15), show="*")
     pass_input.pack(pady=20)
     button = tkinter.Button(root, text="Create", background="#ADD8E6", relief="flat", activebackground="#03BDF9", highlightthickness=0, bd=0, activeforeground="black", overrelief="flat", font=("Arial", 20), command=lambda: create_password(pass_input, root))
     button.pack(pady=30)
