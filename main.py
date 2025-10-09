@@ -66,7 +66,6 @@ def get_note_content(path):
         with open(path, "rb") as file:
             content = file.read()
         key = get_fernet_key(PASSWORD)
-        print("password global is " + str(PASSWORD) + ", key is " + str(key) + ". its length is " + str(len(key)))
         f = cryptography.fernet.Fernet(key)
         decrypted = f.decrypt(content)
         text = decrypted.decode()
@@ -135,7 +134,6 @@ def choose_new_pass():
     root.mainloop()
 
 def load_widget(widget_type, data: NoteData | None = None):
-    print("engaged load_widget func, data is " + str(data) + " and widget type is " + str(widget_type))
     if widget_type == WidgetTypes.text_editor:
         def save():
             written_text = text.get("1.0", "end-1c")
@@ -166,7 +164,6 @@ def load_widget(widget_type, data: NoteData | None = None):
                 title="Select a file",
                 filetypes=[("DarkNote Text file", f"*{DARKNOTE_EXTENSION}")]
             )
-            print("file path is " + str(file_path) + " and class is " + str(type(file_path)) + ". does file path end with " + DARKNOTE_EXTENSION + "?: " + str(file_path.endswith(DARKNOTE_EXTENSION)))
             if file_path == "":
                 return
             if not file_path.endswith(DARKNOTE_EXTENSION):
@@ -186,11 +183,9 @@ def load_widget(widget_type, data: NoteData | None = None):
     elif widget_type == WidgetTypes.enter_password:
         def handle():
             password = pass_input.get()
-            print("password is " + str(password))
             if verify_password(password):
                 global PASSWORD
                 PASSWORD = password
-                print("set password global to " + str(PASSWORD))
                 root.destroy()
                 load_widget(WidgetTypes.load_file)
             else:
