@@ -11,6 +11,7 @@ import base64
 import tkinter.simpledialog
 import sys
 import ctypes
+import subprocess
 
 USER = getpass.getuser()
 BASE_PATH = fr"C:\Users\{USER}\AppData\Local\DarkNote"
@@ -156,6 +157,12 @@ def load_widget(widget_type, data: NoteData | None = None):
             written_text = text.get("1.0", "end-1c")
             root.destroy()
             save_note(note_path, written_text)
+        def run_py_script():
+            written_text = text.get("1.0", "end-1c")
+            try:
+                subprocess.Popen(['python', '-c', written_text], creationflags=subprocess.CREATE_NEW_CONSOLE)
+            except Exception as err:
+                tkinter.messagebox.showerror("Error compiling: " + str(err))
         root = get_default_widget(window_width=800, window_height=600, resizable=True)
         container = tkinter.Frame(root, bg="#020E20")
         container.pack(side="right", fill="both", expand=True)
@@ -173,6 +180,8 @@ def load_widget(widget_type, data: NoteData | None = None):
         text.insert("1.0", content)
         save_button = tkinter.Button(container, text="Save", background="#AAFFB8", relief="flat", activebackground="#007A10", highlightthickness=0, bd=0, activeforeground="black", overrelief="flat", font=("Arial", 20), command=save)
         save_button.pack(side="top", fill="x")
+        py_run = tkinter.Button(container, text="Run py script", background="#00FFFF", relief="flat", activebackground="#EEFF00", highlightthickness=0, bd=0, activeforeground="black", overrelief="flat", font=("Arial", 20), command=run_py_script)
+        py_run.pack(side="top", fill="x")
         root.mainloop()
     elif widget_type == WidgetTypes.load_file:
         def choose_file():
@@ -235,6 +244,12 @@ def load_widget(widget_type, data: NoteData | None = None):
                     return
                 root.destroy()
                 save_note(note_path, written_text)
+        def run_py_script():
+            written_text = text.get("1.0", "end-1c")
+            try:
+                subprocess.Popen(['python', '-c', written_text], creationflags=subprocess.CREATE_NEW_CONSOLE)
+            except Exception as err:
+                tkinter.messagebox.showerror("Error compiling: " + str(err))
         root = get_default_widget(window_width=800, window_height=600, resizable=True)
         container = tkinter.Frame(root, bg="#020E20")
         container.pack(side="right", fill="both", expand=True)
@@ -249,6 +264,8 @@ def load_widget(widget_type, data: NoteData | None = None):
         text.pack(fill="both", expand=True, padx=(0, 50), pady=0)
         save_button = tkinter.Button(container, text="Save", background="#AAFFB8", relief="flat", activebackground="#007A10", highlightthickness=0, bd=0, activeforeground="black", overrelief="flat", font=("Arial", 20), command=save)
         save_button.pack(side="top", fill="x")
+        py_run = tkinter.Button(container, text="Run py script", background="#00FFFF", relief="flat", activebackground="#EEFF00", highlightthickness=0, bd=0, activeforeground="black", overrelief="flat", font=("Arial", 20), command=run_py_script)
+        py_run.pack(side="top", fill="x")
         root.mainloop()
 
 def main():
